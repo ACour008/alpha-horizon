@@ -1,0 +1,29 @@
+{
+  "__type__": "cc.Material",
+  "_name": "space",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "0347ac4f-dba7-400f-8900-ff43aea927ac"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {
+        "USE_TEXTURE": true,
+        "INPUT_IS_GAMMA": false,
+        "USE_ALPHA_TEST": false
+      },
+      "props": {
+        "mainOffset": {
+          "__type__": "cc.Vec2",
+          "x": 0,
+          "y": 0
+        },
+        "texture": {
+          "__uuid__": "df53a9b6-c830-4a0d-853f-68a1ff1bd8e5"
+        }
+      }
+    }
+  }
+}

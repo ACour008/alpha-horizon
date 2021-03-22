@@ -1,0 +1,8 @@
+{
+  "engine": "cocos-creator-js",
+  "packages": "packages",
+  "name": "SpaceAdventure",
+  "id": "c998e781-47f6-40cc-aac6-7544db2b3360",
+  "version": "2.4.3",
+  "isNew": false
+}
