@@ -3,7 +3,7 @@ A 2D story-driven space combat and trading game in the works. Created with Cocos
 
 ## Features at this stage of development:
 - A small universe (~36 star systems) but it is procedurally generated.
-- Thats about it for now.
+- Navigate through boundless solar systems. If you wanted to, you could fly you ship through space forever (or at least until your computer runs out of memory).
 
 ## Future developments:
 - Travel through 'jump gates'.
