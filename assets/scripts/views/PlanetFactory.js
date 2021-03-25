@@ -4,11 +4,12 @@ import OrbitalNode from "./OrbitalNode";
 
 export default class PlanetFactory {
     
-    pixelSizesByClassification = [[128, 192], [192, 256], [256, 320], [320, 384], [384, 448], [448, 512], [512, 576]];
+    pixelSizesByClassification = [[256, 320], [320, 384], [384, 448], [448, 512], [512, 576], [276, 340], [340, 404]];
     
     constructor() {
         cc.resources.preloadDir("planets");
     }
+    // This factory generates a sprite and size range depending on planet type.
     create(orbital) {
         let node = new OrbitalNode(`${orbital.name}_node`);
         let sprite = node.addComponent(cc.Sprite);

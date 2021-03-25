@@ -1,6 +1,6 @@
 import Yaw from "./commands/Yaw";
 import MoveForward from './commands/MoveForward';
-import GetTarget from "./commands/GetTarget";
+import SelectTarget from "./commands/SelectTarget";
 import DeselectTarget from "./commands/DeselectTarget";
 import RequestLanding from "./commands/RequestLanding";
 import OpenMap from "./commands/OpenMap";
@@ -48,7 +48,7 @@ cc.Class({
                 this.rotate = -1;
                 break;
             case cc.macro.KEY.tab:
-                this.execute(new GetTarget(), player, this.gameComponent.starSystem.objectsInSystem);
+                this.execute(new SelectTarget(), player, this.gameComponent.starSystem.objectsInSystem);
                 break;
             case cc.macro.KEY.escape:
                 this.execute(new DeselectTarget(), player);

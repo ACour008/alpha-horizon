@@ -1,6 +1,6 @@
 import Command from "./Command";
 
-export default class GetTarget {
+export default class SelectTarget {
     constructor() {
         return new Command(this.selectTarget);
     }
@@ -14,7 +14,6 @@ export default class GetTarget {
         let closestTarget = null;
         
         arr.forEach((target) => {
-            console.log(target);
             if (target.isOnScreen()) {
                 let distanceToTarget = target.position.sub(ship.node.position).magSqr();  
                
@@ -24,9 +23,6 @@ export default class GetTarget {
                 }
             }
         });
-
-        ship.selectedTarget = closestTarget;
-        ship.targetUINode.getComponent("TargetUI").enableTarget(ship.selectedTarget);
-        ship.hasTarget = true;
+        ship.selectTarget(closestTarget);
     }
 }

@@ -4,7 +4,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        autoRotate: false,
+        autoRotate: true,
         padding: {
             default:25,
             type: cc.Float,
@@ -33,18 +33,18 @@ cc.Class({
     enableTarget(selectedObject) {
         if (selectedObject === null) return
 
-        // this should return a boolean.
-        // perhaps if tween was successful?
         this.node.active = true;
         this.node.position = selectedObject.position;
 
         this.node.width = selectedObject.width + this.padding;
         this.node.height = selectedObject.height + this.padding;
+
         this.node.scale = this.startScale;
         this.node.opacity = 0;
 
         // not sure why .call() needs to be called.
         cc.tween(this.node).to(this.animationSpeed, {scale: 1, angle:180, opacity: 255}, {easing: 'sineOutIn'}).call().start();
+        
     },
 
     disableTarget() {

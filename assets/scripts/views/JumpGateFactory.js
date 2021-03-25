@@ -4,7 +4,7 @@ import rndm from "../generators/bin/rndm";
 export default class JumpGateFactory {
 
     constructor() { 
-        cc.resources.preload("jumpgate");
+        cc.resources.preloadDir("jumpgates");
     }
 
     create(orbital) {
@@ -12,11 +12,14 @@ export default class JumpGateFactory {
         let sprite = node.addComponent(cc.Sprite);
         let rotator = node.addComponent("Rotator");
         let dir = [-1, 1];
-        rotator.rotateSpeed = rndm.seedRange(0, 1, orbital.name) * dir[rndm.seedRangeInt(0, 1, orbital.name)];
+        let number = rndm.seedRangeInt(1, 2);
 
-        cc.resources.load("jumpgate", cc.SpriteFrame, (err, spriteFrame) => {
+        rotator.rotateSpeed = 0.15 * dir[rndm.seedRangeInt(0, 1, orbital.name)];
+        
+        cc.resources.load(`jumpgates/jumpgate-${number}`, cc.SpriteFrame, (err, spriteFrame) => {       
+            let size = spriteFrame.getOriginalSize();
             sprite.spriteFrame = spriteFrame;
-            node.setContentSize(213, 176);
+            node.setContentSize(size.width/3, size.height/3);
         });
         return node;
     }

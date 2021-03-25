@@ -17,12 +17,46 @@ cc.Class({
         turnDamping: 0.35,
         accel: 0,
         maxAccel: 0,
-        targetUINode: { default: null, type: cc.Node },
+        targetUI: cc.SpriteFrame,
         status: { default: ShipStatus.Normal, type: ShipStatus },
     },
     
     init(start) {
         this.currentSystem = start;
-        this.rb = this.getComponent(cc.RigidBody); 
+        this.selectedTarget = null;
+        this.rb = this.getComponent(cc.RigidBody);
+        this.targetComponent = this.makeTargetUINode(true);
+    },
+
+    makeTargetUINode(startActive) {
+        let node = new cc.Node("TargetUINode");
+        sprite = node.addComponent(cc.Sprite);
+        targetUIComponent = node.addComponent("TargetUI");
+
+        sprite.spriteFrame = this.targetUI;
+        sprite.type = cc.Sprite.Type.SLICED;
+        sprite.sizeMode = cc.Sprite.SizeMode.TRIMMED;
+
+        node.parent = cc.Canvas.instance.node;
+        node.position = this.node.position;
+        node.opacity = 127;
+        node.size = this.targetUI.getOriginalSize();
+        node.active = startActive;
+
+        console.log(node.position);
+
+        return targetUIComponent;
+    },
+
+    selectTarget(target) {
+        this.selectedTarget = target;
+        this.targetComponent.enableTarget(target);
+        this.hasTarget = true;
+    },
+
+    deselectTarget() {
+        this.selectedTarget = null;
+        this.targetComponent.disableTarget();
+        this.hasTarget = false;
     }
 });

@@ -5,7 +5,7 @@ import PlanetFactory from "./views/PlanetFactory";
 import StarFactory from "./views/StarFactory";
 
 
-export default class ViewFactory {
+export default class ViewDelegate {
     constructor() {
         // ordering based on enum in Orbital model class
         this.factories = [
