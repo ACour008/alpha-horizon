@@ -28,21 +28,21 @@ export default class Star extends Orbital {
                 let name = "Planet_" + String.fromCharCode(Math.floor(Math.random() * 25) + 97);
                 let planet = new Planet(name, orbDstMin, orbDstMax);
             
-                planet.generate();                      // create moons
+                planet.generate();
                 this.addChild(planet);
                 orbDstMin += orbDstMin + 5e6; orbDstMax += orbDstMax + 2.5e5;
             }
-        
-            // create jump gates;
-            try {
-                for(let i = 0; i < routes.length; i++) {
-                    let orbDst = (this.children.length >= 1) ? this.children[0].orbitalDistance + Math.floor(rndm.seedRange(2.5e5, 5e5, i)) : Math.floor(rndm.seedRange(45e6, 70e6, i));
-                    let jumpGate = new JumpGate(`JumpGate_${i}`, orbDst, routes[i]);
-                    this.addChild(jumpGate);
+
+            // create jump gates
+            for(let i = 0; i < routes.length; i++) {
+                let orbDst = 0;
+                if (this.children.length >= 1) {
+                    orbDst = this.children[0].orbitalDistance + Math.floor(rndm.seedRange(2.5e5, 5e7, i));
+                } else {
+                    orbDst = Math.floor(rndm.seedRange(45e6, 70e6, i));
                 }
-            }
-            catch (err) {
-                throw err;
+                let jumpGate = new JumpGate(`JumpGate_${i}`, orbDst, routes[i]);
+                this.addChild(jumpGate);
             }
             this.generated = true;
         }

@@ -2,10 +2,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        target: {
-            default: null,
-            type: cc.Node
-        }
+        target: cc.Node
     },
 
     update (dt) {

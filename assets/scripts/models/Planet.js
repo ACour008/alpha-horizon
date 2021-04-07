@@ -1,4 +1,6 @@
 import Orbital from "./Orbital";
+import JumpGate from "./JumpGate";
+import DockingBay from "./DockingBay";
 import rndm from "../generators/bin/rndm";
 import utils from "../Utils";
 import RandomSelector from "../generators/RandomSelector";
@@ -18,10 +20,17 @@ export default class Planet extends Orbital {
         this.classification = this.getRandomValue(PlanetProbabilities, this.name);
         this.radius = PlanetRadiiByClass[this.classification];
         this.mass = PlanetMassByClass[this.classification];
+        this.dockingBay = this.generateDockingBay(new RandomSelector(0, 1, 0.5));
+    }
+
+    generateDockingBay(randomSelector) {
+        let value = this.getRandomValue([randomSelector], this.name);
+        let numBays = rndm.seedRangeInt(5, 15, this.name);
+        return (value === 1) ? new DockingBay(numBays, this.name) : null;
     }
 
     generate() {
-        // generateMoons(utils.randomRangeInt(0, 5));
+        // create jump gates;
     }
 
     generateEarth() {

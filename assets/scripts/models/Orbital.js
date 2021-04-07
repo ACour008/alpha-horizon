@@ -12,7 +12,7 @@ export default class Orbital {
 
     constructor(name) {
         this.name = name;
-        this.graphicID = null;
+        this.id = null;
         this.parent = null;
         this.children = [];
         this.mass = 0;                // or size maybe??
@@ -22,21 +22,24 @@ export default class Orbital {
         this.orbitalTime = null;
         this.type = null,
         this.classification = null;
+        this.dockingBay = null;
         this.generated = false;
     }
 
+    // GETTERS/SETTERS
     getParent() { return this.parent; }
     setParent(parent) { this.parent = parent; }
     getChild(index) { return this.children[index]; }
     getChildren() { return this.children; }
-
-    // convert orbit info to vec2 coordinates
     setScreenPosition(vecObj) { this.screenPos = vecObj }
     getScreenPosition() { 
         return cc.v2(
             Math.sin(this.angle) * this.orbitalDistance,
             Math.cos(this.angle) * this.orbitalDistance
         )
+    }
+    getChildByName(name) {
+       return this.children.find((child) => child.name === name);
     }
 
     update(timeSinceStart) {

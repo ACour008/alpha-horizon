@@ -5,15 +5,16 @@ export default class SelectTarget {
         return new Command(this.selectTarget);
     }
 
-    selectTarget(ship, arr) {
-        if (ship.hasTarget) {
-            arr = arr.filter((item) => item !== ship.selectedTarget);
+    selectTarget(ship) {
+        let targets = ship.targeting.targets;
+        if (ship.targeting.getCurrentTarget() !== null) {
+            targets = targets.filter((item) => item !== ship.targeting.getCurrentTarget());
         }
 
         let distanceToClosestTarget = 1e10;
         let closestTarget = null;
         
-        arr.forEach((target) => {
+        targets.forEach((target) => {
             if (target.isOnScreen()) {
                 let distanceToTarget = target.position.sub(ship.node.position).magSqr();  
                
@@ -23,6 +24,6 @@ export default class SelectTarget {
                 }
             }
         });
-        ship.selectTarget(closestTarget);
+        ship.targeting.enableTarget(closestTarget);
     }
 }

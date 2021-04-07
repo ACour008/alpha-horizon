@@ -8,7 +8,7 @@ export default class JumpGateFactory {
     }
 
     create(orbital) {
-        let node = new OrbitalNode(`${orbital.name}_node`);
+        let node = new OrbitalNode(orbital.name);
         let sprite = node.addComponent(cc.Sprite);
         let rotator = node.addComponent("Rotator");
         let dir = [-1, 1];
@@ -20,6 +20,7 @@ export default class JumpGateFactory {
             let size = spriteFrame.getOriginalSize();
             sprite.spriteFrame = spriteFrame;
             node.setContentSize(size.width/3, size.height/3);
+            node.isDockable = true;
         });
         return node;
     }

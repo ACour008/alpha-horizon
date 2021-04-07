@@ -6,9 +6,11 @@ export default class Yaw {
     }
 
     turn(ship, direction) {
-        if (ship.rb.angularVelocity >= -ship.maxAngularVelocity &&
-            ship.rb.angularVelocity <= ship.maxAngularVelocity) {
-                ship.rb.applyTorque(ship.torque * direction);
+        let data = ship.playerData[0];
+
+        if (ship.rb.angularVelocity >= -data.maxAngularVelocity &&
+            ship.rb.angularVelocity <= data.maxAngularVelocity) {
+                ship.rb.applyTorque(data.torque * direction);
         }
     }
 }

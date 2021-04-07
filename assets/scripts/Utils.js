@@ -34,36 +34,17 @@ class Utils {
         return (val < min) ? min : val > max ? max : val;
     };
 
-    // randomSeed(seedValue) {
-    //     let seed = (seedValue) ? new Math.seedrandom(seedValue) : new Math.seedrandom();
-    //     return seed();
-    // }
+    makeSpriteNode(name, spriteFrame, options) {
+        let node = new cc.Node(name);
+        let sprite = node.addComponent(cc.Sprite);
+        sprite.spriteFrame = spriteFrame;
 
-    // // Returns arbitary value between min and max
-    // randomSeedRange(min, max, seedValue) {
-    //     let seed = (seedValue) ? new Math.seedrandom(seedValue) : new Math.seedrandom();
-    //     return seed() * (max - min) + min;
-    // };
+        for (let key in options) {
+            sprite[key] = options[key];
+        }
 
-    // // Returns between min and max, all inclusive
-    // randomSeedRangeInt(min, max, seedValue) {
-    //     let seed = (seedValue) ? new Math.seedrandom(seedValue) : new Math.seedrandom();
-    //     min = Math.ceil(min);
-    //     max = Math.floor(max);
-    //     return Math.floor(seed() * (max - min + 1)) + min;
-    // };
-
-    // randomRange(min, max) {
-    //     min = Math.ceil(min);
-    //     max = Math.floor(max);
-    //     return Math.floor(Math.random() * (max - min + 1)) + min;
-    // }
-
-    // randomSeedVector(widthLimit, heightLimit, seedValue) {
-    //     let x = this.randomSeedRange(-widthLimit, widthLimit, seedValue);
-    //     let y = this.randomSeedRange(-heightLimit, heightLimit, seedValue);
-    //     return new cc.v2(x, y);
-    // };
+        return node;
+    }
 }
 
 let utils = new Utils();

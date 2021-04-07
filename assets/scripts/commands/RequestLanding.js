@@ -6,8 +6,18 @@ export default class RequestLanding {
     }
 
     makeRequest(ship) {
-        if(!ship.hasTarget) return;
-        entityComponent = ship.selectedTarget.getComponent("Entity");
-        (entityComponent.isDockable) ? entityComponent.processDockingRequest(ship) : console.log("Spaceship: Uh... you can't dock here.");
+        let target = ship.targeting.getCurrentTarget();
+
+        if (!target) {
+            console.log("No target selected");
+
+        } else {
+            if (target.isDockable) {
+                let orbital = cc.Canvas.instance.getComponent("GameController").starSystem.getOrbitalByName(target.name);
+                orbital.dockingBay.processLandingRequest(ship);
+            } else {
+                console.log(target.name + " has no available docking bay");
+            }
+        }
     }
 }

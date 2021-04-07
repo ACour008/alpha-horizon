@@ -8,11 +8,12 @@ export default class StarFactory {
     }
 
     create(orbital) {
-        let node = new OrbitalNode(`${orbital.name}_node`);
+        let node = new OrbitalNode(orbital.name);
         let sprite = node.addComponent(cc.Sprite);
 
         cc.resources.load(`stars/${orbital.classification}`, cc.SpriteFrame, (err, spriteFrame) => {
             sprite.spriteFrame = spriteFrame;
+            node.isDockable = false;
         });
 
         return node;

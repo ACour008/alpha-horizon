@@ -1,6 +1,7 @@
 import {PlanetType} from "../Enums";
 import rndm from "../generators/bin/rndm";
 import OrbitalNode from "./OrbitalNode";
+import Utils from "../Utils";
 
 export default class PlanetFactory {
     
@@ -11,7 +12,7 @@ export default class PlanetFactory {
     }
     // This factory generates a sprite and size range depending on planet type.
     create(orbital) {
-        let node = new OrbitalNode(`${orbital.name}_node`);
+        let node = new OrbitalNode(orbital.name);
         let sprite = node.addComponent(cc.Sprite);
         let nodeSize = this.pixelSizesByClassification[orbital.classification];
         let pxl = rndm.seedRangeInt(nodeSize[0], nodeSize[1], orbital.name);
@@ -21,6 +22,7 @@ export default class PlanetFactory {
         cc.resources.load(`planets/${type}-${number}`, cc.SpriteFrame, (err, spriteFrame) => {
             sprite.spriteFrame = spriteFrame;
             node.setContentSize(cc.size(pxl, pxl));
+            node.isDockable = (orbital.dockingBay !== null) ? true : false;
             
         });
         return node;

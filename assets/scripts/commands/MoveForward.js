@@ -10,13 +10,14 @@ export default class MoveForward {
         // Convert the node's angle from degrees to rad
         let rads = (ship.node.angle+90) * utils.DEG2RAD;
         let speedVec = cc.v2(Math.cos(rads), Math.sin(rads));
+        let data = ship.playerData[0];
     
-        ship.rb.applyForceToCenter(speedVec.mul(ship.accel), true);
+        ship.rb.applyForceToCenter(speedVec.mul(data.accel), true);
     
         //Limit magnitude
-        if (ship.rb.linearVelocity.magSqr() > ship.maxAccel * ship.maxAccel) {
+        if (ship.rb.linearVelocity.magSqr() > data.maxAccel * data.maxAccel) {
             let normVel = ship.rb.linearVelocity.normalize();
-            let clampedVel = normVel.mul(ship.maxAccel);
+            let clampedVel = normVel.mul(data.maxAccel);
                 
             ship.rb.linearVelocity = clampedVel;
         }

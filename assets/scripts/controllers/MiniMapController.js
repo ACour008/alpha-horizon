@@ -1,3 +1,8 @@
+/* MiniMapController
+ * This is attached to the Camera that renders the 'minimap' group.
+ * But it could also go on the parent node of all UI elements in node hierarchy
+ * In any case, there is a separation between this controller, the camera, and UI nodes.
+*/
 cc.Class({
     extends: cc.Component,
 
@@ -11,7 +16,48 @@ cc.Class({
         miniMapArrowHolder: cc.Node,
     },
 
-    // EVENT FUNCTIONS
+    // INIT STUFF
+
+    init() {
+        this.emitter = cc.Canvas.instance.getComponent("Emitter");
+        this.camera = this.getComponent(cc.Camera);
+        this.initRenderTexture();
+
+        // Register event listeners
+        // The Star System Controller calls these whenever a star system is generated on screen
+        this.emitter.register("create-minimap-icon", this.onCreateIcon, this);
+        this.emitter.register("create-minimap-arrow", this.onCreateArrow, this);
+    },
+
+    initRenderTexture() {
+
+        // Get the width and height from the canvas instance
+        let { height: canvasHeight } = cc.Canvas.instance.node;
+        let renderTextureSprite = this.renderTextureNode.addComponent(cc.Sprite);
+        let renderTexture = new cc.RenderTexture();
+        let spriteFrame;
+
+        renderTexture.initWithSize(canvasHeight, canvasHeight);
+        this.camera.targetTexture = renderTexture;
+
+        spriteFrame = new cc.SpriteFrame(renderTexture);
+        renderTextureSprite.spriteFrame = spriteFrame;
+        // renderTextureSprite.type = cc.Sprite.Type.SLICED;
+        // renderTextureSprite.sizeMode = cc.Sprite.SizeMode.CUSTOM;
+
+        // TODO: Apply post processing to make texture look even cooler!
+
+        this.renderTextureNode.scaleY = -1;   // flip image horizontally.
+        this.renderTextureNode.setContentSize(this.renderTextureSize);
+        this.renderTextureNode.setPosition(cc.v2(0, 0));
+    },
+
+    // GAME EVENT FUNCTIONS
+
+    update (dt) {        
+        this.camera.node.position = this.followTarget.position;
+        this.camera.orthoSize = 360;
+    },
 
     onCreateIcon(args) {
         let parentNode = args[0];
@@ -40,48 +86,5 @@ cc.Class({
         node.setParent(this.miniMapArrowHolder);
         node.setContentSize(cc.size(64, 64));
         node.setAnchorPoint(cc.v2(0.45, 0.55));
-    },
-
-    // INIT STUFF
-
-    initRenderTexture() {
-
-        // Get the width and height from the canvas instance
-        let { height: canvasHeight } = cc.Canvas.instance.node;
-        let renderTextureSprite = this.renderTextureNode.addComponent(cc.Sprite);
-        let renderTexture = new cc.RenderTexture();
-        let spriteFrame;
-
-        renderTexture.initWithSize(canvasHeight, canvasHeight);
-        this.camera.targetTexture = renderTexture;
-
-        spriteFrame = new cc.SpriteFrame(renderTexture);
-        renderTextureSprite.spriteFrame = spriteFrame;
-        // renderTextureSprite.type = cc.Sprite.Type.SLICED;
-        // renderTextureSprite.sizeMode = cc.Sprite.SizeMode.CUSTOM;
-
-        // TODO: Apply post processing to make texture look even cooler!
-
-        this.renderTextureNode.scaleY = -1;   // flip image horizontally.
-        this.renderTextureNode.setContentSize(this.renderTextureSize);
-        this.renderTextureNode.setPosition(cc.v2(0, 0));
-    },
-
-    init() {
-        this.gameComponent = cc.Canvas.instance.getComponent("GameController");
-        this.camera = this.getComponent(cc.Camera);
-        this.initRenderTexture();
-
-        // Register event listeners
-        // The Star System Controller calls these whenever a star system is generated on screen
-        this.gameComponent.node.on("create-minimap-icon", this.onCreateIcon, this);
-        this.gameComponent.node.on("create-minimap-arrow", this.onCreateArrow, this);
-    },
-
-    // GAME LOOP EVENT FUNCTIONS
-
-    update (dt) {        
-        this.camera.node.position = this.followTarget.position;
-        this.camera.orthoSize = 360;
     },
 });

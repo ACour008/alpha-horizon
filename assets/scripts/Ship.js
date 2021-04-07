@@ -5,6 +5,7 @@ const ShipStatus = cc.Enum({
     Docked: 1,
     Disabled: 2,
     Dead: 3,
+    MapOpen: 4
 });
 
 cc.Class({
@@ -25,9 +26,13 @@ cc.Class({
         this.currentSystem = start;
         this.selectedTarget = null;
         this.rb = this.getComponent(cc.RigidBody);
-        this.targetComponent = this.makeTargetUINode(true);
+        this.targetComponent = this.makeTargetUINode(false);
     },
 
+    /* Creates the target UI node, makes it a child of the canvas instance
+    *  @param: startActive {boolean} type - sets active property of node
+    *  @return: targetUIComponent {TargetUI} [TYPE] - the target component
+    */        
     makeTargetUINode(startActive) {
         let node = new cc.Node("TargetUINode");
         sprite = node.addComponent(cc.Sprite);
@@ -43,17 +48,19 @@ cc.Class({
         node.size = this.targetUI.getOriginalSize();
         node.active = startActive;
 
-        console.log(node.position);
-
         return targetUIComponent;
     },
 
+    /* Selects target, places target UI over it
+    *  @param: target {cc.Node} object - the target to be selected
+    */
     selectTarget(target) {
         this.selectedTarget = target;
         this.targetComponent.enableTarget(target);
         this.hasTarget = true;
     },
 
+    /* Deselects target, removing target UI */
     deselectTarget() {
         this.selectedTarget = null;
         this.targetComponent.disableTarget();

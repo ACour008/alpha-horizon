@@ -4,6 +4,7 @@ let OrbitalNode = cc.Class({
     extends: BaseView,
 
     properties: {
+        isDockable: false,
     },
 });
 
